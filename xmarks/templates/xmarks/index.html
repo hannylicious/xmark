@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    Hello {{ user.username }}!
+    <ul>
+        {% for bookmark in favorite_bookmarks %}
+            <li>
+                <a href="{{ bookmark.url }}">{{ bookmark.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

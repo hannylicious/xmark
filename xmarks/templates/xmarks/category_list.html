@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Categories</h1>
+    {% if categories %}
+        <a class="btn btn-primary" href="{% url 'xmarks:category-create' %}">Add Category</a>
+        <ul>
+            {% for category in categories %}
+                <li>
+                    <a href="{% url 'xmarks:category-detail' category.pk %}">{{ category }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No categories have been added yet.</p>
+        <p><a href="{% url 'xmarks:category-create' %}">Would you like to add a category</a></p>
+    {% endif %}
+{% endblock %}
