@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.db import models
-from django.db.models import Q
 from django.urls import reverse
 
 from users.models import User
@@ -17,7 +16,19 @@ class Category(models.Model):
         null=True,
     )
     root = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="%(class)s_created_by",
+        on_delete=models.PROTECT,
+    )
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="%(class)s_updated_by",
+        on_delete=models.PROTECT,
+    )
 
     class Meta:
         verbose_name = "Category"
@@ -33,7 +44,19 @@ class Category(models.Model):
 class Tag(models.Model):
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="%(class)s_created_by",
+        on_delete=models.PROTECT,
+    )
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="%(class)s_updated_by",
+        on_delete=models.PROTECT,
+    )
 
     class Meta:
         verbose_name = "tag"
@@ -59,7 +82,19 @@ class Bookmark(models.Model):
         blank=True,
         null=True,
     )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="%(class)s_created_by",
+        on_delete=models.PROTECT,
+    )
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="%(class)s_updated_by",
+        on_delete=models.PROTECT,
+    )
 
     class Meta:
         verbose_name = "bookmark"
