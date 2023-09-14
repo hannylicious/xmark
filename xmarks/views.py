@@ -37,14 +37,27 @@ class bookmarkDetailView(LoginRequiredMixin, DetailView):
 
 
 class bookmarkCreateView(LoginRequiredMixin, CreateView):
-    fields = "__all__"
+    fields = [
+        "name",
+        "url",
+        "is_favorite",
+        "tags",
+        "category",
+    ]
     model = Bookmark
     success_url = reverse_lazy("xmarks:bookmark-list")
+
+    def form_valid(self, form):
+        user = self.request.user
+        form.instance.user = user
+        form.instance.created_by = user
+        form.instance.updated_by = user
+        return super().form_valid(form)
 
 
 class bookmarkListView(LoginRequiredMixin, ListView):
     model = Bookmark
-    queryset = Bookmark.objects.all()
+    queryset = Bookmark.objects.all().order_by("category")
     context_object_name = "bookmarks"
 
     def get_context_data(self, **kwargs):
@@ -64,6 +77,13 @@ class categoryDetailView(LoginRequiredMixin, DetailView):
 class categoryCreateView(LoginRequiredMixin, CreateView):
     form_class = CategoryForm
     template_name = "xmarks/category_form.html"
+
+    def form_valid(self, form):
+        user = self.request.user
+        form.instance.user = user
+        form.instance.created_by = user
+        form.instance.updated_by = user
+        return super().form_valid(form)
 
 
 class categoryListView(LoginRequiredMixin, ListView):

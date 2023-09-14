@@ -1,16 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Bookmarks</h1>
+    <h1>Bookmarks <a class="btn btn-primary float-end" href="{% url 'xmarks:bookmark-create' %}"><i class="bi bi-bookmark-plus"></i> Add bookmark</a></h1>
     {% if bookmarks %}
-        <a class="btn btn-primary" href="{% url 'xmarks:bookmark-create' %}">Add bookmark</a>
+        {% regroup bookmarks by category as bookmark_list %}
         <ul>
-        {% for bookmark in bookmarks %}
-            <li>
-                <a href="{{ bookmark.url }}">{{ bookmark.name }}</a>
+        {% for category, bookmarks in bookmark_list %}
+            <li>{{ category }}
+            <ul>
+            {% for bookmark in bookmarks %}
+                <li>
+                    <a href="{{ bookmark.url }}">{{ bookmark.name }}</a>
+                </li>
+            {% endfor %}
+            </ul>
             </li>
         {% endfor %}
-    </ul>
+        </ul>
     {% else %}
         <p>No bookmarks yet.</p>
         <p><a href="{% url 'xmarks:bookmark-create' %}">Create a bookmark?</a> </p>

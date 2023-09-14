@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Categories</h1>
+<h1>Categories <a class="btn btn-primary float-end" href="{% url 'xmarks:category-create' %}"><i class="bi bi-folder-plus"></i> Add Category</a></h1>
     {% if categories %}
-        <a class="btn btn-primary" href="{% url 'xmarks:category-create' %}">Add Category</a>
         <ul>
             {% for category in categories %}
                 <li>

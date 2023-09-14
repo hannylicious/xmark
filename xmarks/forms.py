@@ -7,7 +7,7 @@ from xmarks.models import Category
 class CategoryForm(ModelForm):
     class Meta:
         model = Category
-        fields = "__all__"
+        fields = ["name", "root", "category"]
 
     def clean(self):
         cleaned_data = super().clean()
