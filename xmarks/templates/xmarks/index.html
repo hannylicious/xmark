@@ -1,12 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    Hello {{ user.username }}!
-    <ul>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-2">
         {% for bookmark in favorite_bookmarks %}
-            <li>
-                <a href="{{ bookmark.url }}">{{ bookmark.name }}</a>
-            </li>
+            <div class="col">
+                <div class="card shadow-sm">
+                    <a href="{{ bookmark.url }}">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>
+                    {{ bookmark.name }}</title><rect width="100%" height="100%" fill="#55595c"></rect></svg>
+                    </a>
+                    <div class="card-body">
+                        <p class="card-text">{{ bookmark.name }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="{{ bookmark.url }}" type="button" class="btn btn-sm btn-outline-primary">Visit</a>
+                                <a href="{% url 'xmarks:bookmark-update' bookmark.pk %}" type="button" class="btn btn-sm btn-outline-primary">Edit</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 {% endblock %}

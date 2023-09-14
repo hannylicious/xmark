@@ -4,7 +4,13 @@ from django.http import HttpResponse
 
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, CreateView, ListView, TemplateView
+from django.views.generic import (
+    DetailView,
+    CreateView,
+    ListView,
+    TemplateView,
+    UpdateView,
+)
 
 from xmarks.forms import CategoryForm
 from xmarks.models import Tag, Bookmark, Category
@@ -51,6 +57,23 @@ class bookmarkCreateView(LoginRequiredMixin, CreateView):
         user = self.request.user
         form.instance.user = user
         form.instance.created_by = user
+        form.instance.updated_by = user
+        return super().form_valid(form)
+
+
+class bookmarkUpdateView(LoginRequiredMixin, UpdateView):
+    fields = [
+        "name",
+        "url",
+        "is_favorite",
+        "tags",
+        "category",
+    ]
+    model = Bookmark
+    success_url = reverse_lazy("xmarks:bookmark-list")
+
+    def form_valid(self, form):
+        user = self.request.user
         form.instance.updated_by = user
         return super().form_valid(form)
 
