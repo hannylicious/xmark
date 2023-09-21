@@ -9,27 +9,40 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
-AUTH_USER_MODEL = "users.User"
+import environ
 
-ALLOW_REMOTE_USER = True
+env = environ.Env(
+    # set casting, default value
+    ALLOW_REMOTE_USER=(bool, False),
+    DEBUG=(bool, False),
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
+
+AUTH_USER_MODEL = "users.User"
+
+# False if not in os.environ because of casting above
+ALLOW_REMOTE_USER = env("ALLOW_REMOTE_USER")
+
 
 LOGIN_REDIRECT_URL = "xmarks:index"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-4vjp&%4#uoj$x8lv&6kpfiz+5n8y-v6_pie2cifr+0l+y$qlk2"
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 
 # Application definition
@@ -85,12 +98,7 @@ WSGI_APPLICATION = "xmark.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+DATABASES = {"default": env.db_url("DATABASE_URL")}
 
 
 # Password validation
@@ -115,13 +123,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = env("LANGUAGE_CODE")
 
-TIME_ZONE = "UTC"
+TIME_ZONE = env("TIME_ZONE")
 
-USE_I18N = True
+USE_I18N = env("USE_I18N")
 
-USE_TZ = True
+USE_TZ = env("USE_TZ")
 
 
 # Static files (CSS, JavaScript, Images)
