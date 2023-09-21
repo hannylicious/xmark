@@ -1,2 +1,4 @@
 Django==4.2.4
 django-environ==0.11.2
+channels==4.0.0
+daphne==4.0.0

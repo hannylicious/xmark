@@ -22,7 +22,9 @@ class indexTemplateView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["bookmarks"] = Bookmark.objects.filter(user=self.request.user)
-        context["favorite_bookmarks"] = context["bookmarks"].filter(is_favorite=True)
+        context["favorite_bookmarks"] = context["bookmarks"].filter(
+            is_favorite=True
+        )
         return context
 
 

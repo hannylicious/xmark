@@ -48,6 +48,8 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
+    "channels",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -91,6 +93,9 @@ TEMPLATES = [
         },
     },
 ]
+
+
+ASGI_APPLICATION = "xmark.asgi.application"
 
 WSGI_APPLICATION = "xmark.wsgi.application"
 
