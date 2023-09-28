@@ -4,41 +4,41 @@ from . import views
 
 app_name = "xmarks"
 urlpatterns = [
-    path("", views.indexTemplateView.as_view(), name="index"),
-    path("tags/<int:pk>/", views.tagDetailView.as_view(), name="tag-detail"),
+    path("", views.IndexTemplateView.as_view(), name="index"),
+    path("tags/<int:pk>/", views.TagDetailView.as_view(), name="tag-detail"),
     path(
         "bookmarks/create/",
-        views.bookmarkCreateView.as_view(),
+        views.BookmarkCreateView.as_view(),
         name="bookmark-create",
     ),
     path(
         "bookmarks/<int:pk>/",
-        views.bookmarkDetailView.as_view(),
+        views.BookmarkDetailView.as_view(),
         name="bookmark-detail",
     ),
     path(
         "bookmarks/update/<int:pk>/",
-        views.bookmarkUpdateView.as_view(),
+        views.BookmarkUpdateView.as_view(),
         name="bookmark-update",
     ),
     path(
         "bookmarks/",
-        views.bookmarkListView.as_view(),
+        views.BookmarkListView.as_view(),
         name="bookmark-list",
     ),
     path(
         "categories/create/",
-        views.categoryCreateView.as_view(),
+        views.CategoryCreateView.as_view(),
         name="category-create",
     ),
     path(
         "categories/<int:pk>/",
-        views.categoryDetailView.as_view(),
+        views.CategoryDetailView.as_view(),
         name="category-detail",
     ),
     path(
         "categories/",
-        views.categoryListView.as_view(),
+        views.CategoryListView.as_view(),
         name="category-list",
     ),
 ]
