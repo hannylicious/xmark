@@ -18,9 +18,13 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 
+from pomoman import consumers
+
 urlpatterns = [
     path(
-        "login/", auth_views.LoginView.as_view(template_name="login.html"), name="login"
+        "login/",
+        auth_views.LoginView.as_view(template_name="login.html"),
+        name="login",
     ),
     path(
         "logout/",
@@ -29,4 +33,9 @@ urlpatterns = [
     ),
     path("admin/", admin.site.urls),
     path("xmarks/", include("xmarks.urls")),
+    path("pomoman/", include("pomoman.urls")),
+]
+
+websocket_urlpatterns = [
+    path("ws/twitch/", consumers.TwitchConsumer.as_asgi()),
 ]

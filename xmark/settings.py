@@ -33,6 +33,7 @@ ALLOW_REMOTE_USER = env("ALLOW_REMOTE_USER")
 
 
 LOGIN_REDIRECT_URL = "xmarks:index"
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -49,7 +50,6 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 INSTALLED_APPS = [
     "daphne",
-    "channels",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -58,7 +58,16 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "users",
     "xmarks",
+    "pomoman",
+    "channels",
+    "channels_irc",
 ]
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.RemoteUserBackend",
@@ -146,3 +155,14 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# TWITCH SETTINGS
+TWITCH_SERVER = env.str("TWITCH_SERVER", default="irc.chat.twitch.tv")
+TWITCH_PORT = env.int("TWITCH_PORT", default=6667)
+TWITCH_NICKNAME = env.str("TWITCH_NICKNAME", default="yourusername")
+TWITCH_TOKEN = env.str("TWITCH_TOKEN", default="oauth:yourtoken")
+TWITCH_CHANNEL = env.str("TWITCH_CHANNEL", default="#yourchannel")
+
+
+# Project Ideas
+# TODO: Add a 'core' app that contains basic things useable by all other apps
