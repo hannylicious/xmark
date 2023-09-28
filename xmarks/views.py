@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.http import HttpResponse
 
 from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views.generic import (
     DetailView,
     CreateView,
@@ -16,8 +16,9 @@ from xmarks.forms import CategoryForm
 from xmarks.models import Tag, Bookmark, Category
 
 
-class indexTemplateView(LoginRequiredMixin, TemplateView):
+class IndexTemplateView(LoginRequiredMixin, TemplateView):
     template_name = "xmarks/index.html"
+    login_url = reverse_lazy("login")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -28,7 +29,7 @@ class indexTemplateView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class tagDetailView(LoginRequiredMixin, DetailView):
+class TagDetailView(LoginRequiredMixin, DetailView):
     model = Tag
 
     def get_context_data(self, **kwargs):
@@ -36,7 +37,7 @@ class tagDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class bookmarkDetailView(LoginRequiredMixin, DetailView):
+class BookmarkDetailView(LoginRequiredMixin, DetailView):
     model = Bookmark
 
     def get_context_data(self, **kwargs):
@@ -44,7 +45,7 @@ class bookmarkDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class bookmarkCreateView(LoginRequiredMixin, CreateView):
+class BookmarkCreateView(LoginRequiredMixin, CreateView):
     fields = [
         "name",
         "url",
@@ -63,7 +64,7 @@ class bookmarkCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class bookmarkUpdateView(LoginRequiredMixin, UpdateView):
+class BookmarkUpdateView(LoginRequiredMixin, UpdateView):
     fields = [
         "name",
         "url",
@@ -80,7 +81,7 @@ class bookmarkUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class bookmarkListView(LoginRequiredMixin, ListView):
+class BookmarkListView(LoginRequiredMixin, ListView):
     model = Bookmark
     queryset = Bookmark.objects.all().order_by("category")
     context_object_name = "bookmarks"
@@ -90,7 +91,7 @@ class bookmarkListView(LoginRequiredMixin, ListView):
         return context
 
 
-class categoryDetailView(LoginRequiredMixin, DetailView):
+class CategoryDetailView(LoginRequiredMixin, DetailView):
     model = Category
 
     def get_context_data(self, **kwargs):
@@ -99,7 +100,7 @@ class categoryDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class categoryCreateView(LoginRequiredMixin, CreateView):
+class CategoryCreateView(LoginRequiredMixin, CreateView):
     form_class = CategoryForm
     template_name = "xmarks/category_form.html"
 
@@ -111,7 +112,7 @@ class categoryCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class categoryListView(LoginRequiredMixin, ListView):
+class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
     queryset = Category.objects.all()
     context_object_name = "categories"
