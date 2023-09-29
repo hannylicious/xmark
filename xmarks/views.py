@@ -31,6 +31,7 @@ class IndexTemplateView(LoginRequiredMixin, TemplateView):
 
 class TagDetailView(LoginRequiredMixin, DetailView):
     model = Tag
+    login_url = reverse_lazy("login")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -39,6 +40,7 @@ class TagDetailView(LoginRequiredMixin, DetailView):
 
 class BookmarkDetailView(LoginRequiredMixin, DetailView):
     model = Bookmark
+    login_url = reverse_lazy("login")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -54,6 +56,7 @@ class BookmarkCreateView(LoginRequiredMixin, CreateView):
         "category",
     ]
     model = Bookmark
+    login_url = reverse_lazy("login")
     success_url = reverse_lazy("xmarks:bookmark-list")
 
     def form_valid(self, form):
@@ -73,6 +76,7 @@ class BookmarkUpdateView(LoginRequiredMixin, UpdateView):
         "category",
     ]
     model = Bookmark
+    login_url = reverse_lazy("login")
     success_url = reverse_lazy("xmarks:bookmark-list")
 
     def form_valid(self, form):
@@ -83,6 +87,7 @@ class BookmarkUpdateView(LoginRequiredMixin, UpdateView):
 
 class BookmarkListView(LoginRequiredMixin, ListView):
     model = Bookmark
+    login_url = reverse_lazy("login")
     queryset = Bookmark.objects.all().order_by("category")
     context_object_name = "bookmarks"
 
@@ -93,6 +98,7 @@ class BookmarkListView(LoginRequiredMixin, ListView):
 
 class CategoryDetailView(LoginRequiredMixin, DetailView):
     model = Category
+    login_url = reverse_lazy("login")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -102,6 +108,7 @@ class CategoryDetailView(LoginRequiredMixin, DetailView):
 
 class CategoryCreateView(LoginRequiredMixin, CreateView):
     form_class = CategoryForm
+    login_url = reverse_lazy("login")
     template_name = "xmarks/category_form.html"
 
     def form_valid(self, form):
@@ -114,6 +121,7 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
 
 class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
+    login_url = reverse_lazy("login")
     queryset = Category.objects.all()
     context_object_name = "categories"
 
