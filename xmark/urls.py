@@ -33,9 +33,5 @@ urlpatterns = [
     ),
     path("admin/", admin.site.urls),
     path("xmarks/", include("xmarks.urls")),
-    path("pomoman/", include("pomoman.urls")),
-]
-
-websocket_urlpatterns = [
-    path("ws/twitch/", consumers.TwitchConsumer.as_asgi()),
+    # path("pomoman/", include("pomoman.urls")),
 ]

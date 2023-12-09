@@ -1,19 +1,15 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import ValidationError
-from django.http import HttpResponse
-
-from django.shortcuts import render
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.views.generic import (
-    DetailView,
     CreateView,
+    DetailView,
     ListView,
     TemplateView,
     UpdateView,
 )
 
 from xmarks.forms import CategoryForm
-from xmarks.models import Tag, Bookmark, Category
+from xmarks.models import Bookmark, Category, Tag
 
 
 class IndexTemplateView(LoginRequiredMixin, TemplateView):
@@ -24,7 +20,10 @@ class IndexTemplateView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context["bookmarks"] = Bookmark.objects.filter(user=self.request.user)
         context["favorite_bookmarks"] = context["bookmarks"].filter(
-            is_favorite=True
+            favorite=True
+        )
+        context["frequent_bookmarks"] = context["bookmarks"].filter(
+            frequent=True
         )
         return context
 
@@ -51,7 +50,8 @@ class BookmarkCreateView(LoginRequiredMixin, CreateView):
     fields = [
         "name",
         "url",
-        "is_favorite",
+        "favorite",
+        "frequent",
         "tags",
         "category",
     ]
@@ -71,7 +71,8 @@ class BookmarkUpdateView(LoginRequiredMixin, UpdateView):
     fields = [
         "name",
         "url",
-        "is_favorite",
+        "favorite",
+        "frequent",
         "tags",
         "category",
     ]

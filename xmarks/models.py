@@ -2,8 +2,6 @@ from django.conf import settings
 from django.db import models
 from django.urls import reverse
 
-from users.models import User
-
 
 # Create your models here.
 class Category(models.Model):
@@ -18,7 +16,9 @@ class Category(models.Model):
     root = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT
+    )
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name="%(class)s_created_by",
@@ -43,10 +43,11 @@ class Category(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT
+    )
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name="%(class)s_created_by",
@@ -73,7 +74,8 @@ class Tag(models.Model):
 class Bookmark(models.Model):
     name = models.CharField(max_length=255)
     url = models.CharField(max_length=255)
-    is_favorite = models.BooleanField(default=False)
+    favorite = models.BooleanField(default=False)
+    frequent = models.BooleanField(default=False)
     tags = models.ManyToManyField(Tag, blank=True)
     category = models.ForeignKey(
         Category,
@@ -84,7 +86,9 @@ class Bookmark(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT
+    )
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name="%(class)s_created_by",

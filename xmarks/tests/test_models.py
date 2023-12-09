@@ -1,8 +1,8 @@
-from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.test import TestCase
 from django.urls import reverse
 
-from xmarks.models import Category, Tag, Bookmark
+from xmarks.models import Bookmark, Category, Tag
 
 
 class CategoryModelTestCase(TestCase):
@@ -30,7 +30,6 @@ class TagModelTestCase(TestCase):
         )
         self.tag = Tag.objects.create(
             name="ATag",
-            description="This is a test tag",
             user=self.user,
             created_by=self.user,
             updated_by=self.user,
@@ -39,7 +38,6 @@ class TagModelTestCase(TestCase):
     def test_tag_creation(self):
         tag = Tag.objects.create(
             name="TestTag",
-            description="This is a test tag",
             user=self.user,
             created_by=self.user,
             updated_by=self.user,
@@ -69,14 +67,12 @@ class BookmarkModelTestCase(TestCase):
         )
         self.tag1 = Tag.objects.create(
             name="Tag1",
-            description="Description for Tag1",
             user=self.user,
             created_by=self.user,
             updated_by=self.user,
         )
         self.tag2 = Tag.objects.create(
             name="Tag2",
-            description="Description for Tag2",
             user=self.user,
             created_by=self.user,
             updated_by=self.user,

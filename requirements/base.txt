@@ -1,4 +1,8 @@
-Django==4.2.4
+Django==4.2.8
+django-compressor==4.4
+django-libsass==0.9
 django-environ==0.11.2
 channels==4.0.0
+channels-redis==4.1.0
 daphne==4.0.0
+websockets==12.0
