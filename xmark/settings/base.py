@@ -1,24 +1,24 @@
 """Xmark base settings."""
 
-import os
 from pathlib import Path
 
 import environ
 
-breakpoint()
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 ###
 # DJANGO-ENVIRON
 ###
 env = environ.Env(
     ALLOW_REMOTE_USER_BACKEND=(bool, False),
     DEBUG=(bool, False),
+    DJANGO_SETTINGS_MODULE=(str, "xmark.settings.base"),
 )
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+env_file = Path(__file__).parent.parent / ".env"
 
 # Take environment variables from .env file
-environ.Env.read_env(os.path.join(BASE_DIR / ".env"))
+env.read_env(env_file)
 
 AUTH_USER_MODEL = "users.User"
 
@@ -97,16 +97,16 @@ DATABASES = {"default": env.db_url("DATABASE_URL")}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",  # noqa: E501
     },
     {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",  # noqa: E501
     },
     {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",  # noqa: E501
     },
     {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",  # noqa: E501
     },
 ]
 
@@ -148,6 +148,3 @@ STATICFILES_FINDERS = (
     "compressor.finders.CompressorFinder",
 )
 COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
-
-# Project Ideas
-# TODO: Add a 'core' app that contains basic things useable by all other apps
