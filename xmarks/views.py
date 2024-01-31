@@ -8,8 +8,7 @@ from django.views.generic import (
     UpdateView,
 )
 
-from xmarks.forms import CategoryForm
-from xmarks.models import Bookmark, Category, Tag
+from xmarks.models import Bookmark, Tag
 
 
 class IndexTemplateView(LoginRequiredMixin, TemplateView):
@@ -34,6 +33,9 @@ class TagDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["tag_bookmarks"] = context["tag"].bookmark_set.all(
+            user=self.request.user
+        )
         return context
 
 
@@ -89,42 +91,12 @@ class BookmarkUpdateView(LoginRequiredMixin, UpdateView):
 class BookmarkListView(LoginRequiredMixin, ListView):
     model = Bookmark
     login_url = reverse_lazy("login")
-    queryset = Bookmark.objects.all().order_by("category")
     context_object_name = "bookmarks"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
-
-class CategoryDetailView(LoginRequiredMixin, DetailView):
-    model = Category
-    login_url = reverse_lazy("login")
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["category_bookmarks"] = context["category"].bookmarks.all()
-        return context
-
-
-class CategoryCreateView(LoginRequiredMixin, CreateView):
-    form_class = CategoryForm
-    login_url = reverse_lazy("login")
-    template_name = "xmarks/category_form.html"
-
-    def form_valid(self, form):
-        user = self.request.user
-        form.instance.user = user
-        form.instance.created_by = user
-        form.instance.updated_by = user
-        return super().form_valid(form)
-
-
-class CategoryListView(LoginRequiredMixin, ListView):
-    model = Category
-    login_url = reverse_lazy("login")
-    queryset = Category.objects.all()
-    context_object_name = "categories"
+    def get_queryset(self):
+        return Bookmark.objects.filter(user=self.request.user).order_by(
+            "category"
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

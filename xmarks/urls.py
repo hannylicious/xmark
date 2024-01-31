@@ -26,19 +26,4 @@ urlpatterns = [
         views.BookmarkListView.as_view(),
         name="bookmark-list",
     ),
-    path(
-        "categories/create/",
-        views.CategoryCreateView.as_view(),
-        name="category-create",
-    ),
-    path(
-        "categories/<int:pk>/",
-        views.CategoryDetailView.as_view(),
-        name="category-detail",
-    ),
-    path(
-        "categories/",
-        views.CategoryListView.as_view(),
-        name="category-list",
-    ),
 ]
