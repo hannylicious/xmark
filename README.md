@@ -12,6 +12,7 @@
 * Install requirements 
   * `pip install -r requirements/base.txt` for just the app to work
   * `pip install -r requirements/local.txt` for development
+* Create a local sqlite db if necessary
 * Make a copy of `sample.env` and rename it to `.env` and fill in the values
 * Run the server (from the root of the repo)
   * `python manage.py runserver`
