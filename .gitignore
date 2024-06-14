@@ -166,7 +166,12 @@ node_modules/
 media/
 
 # Static
-static/
+/static/
 
-# Project Apps
-pomoman/
+# Additional Apps
+
+# SQLite
+*.sqlite
+
+# Nix Related
+shell.nix
