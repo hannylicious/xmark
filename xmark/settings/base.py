@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "users",
     "xmarks",
-    "pomoman",
 ]
 
 AUTHENTICATION_BACKENDS = [
