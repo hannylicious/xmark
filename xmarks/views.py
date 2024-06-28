@@ -12,7 +12,7 @@ from xmarks.models import Bookmark, Tag
 
 
 class IndexTemplateView(LoginRequiredMixin, TemplateView):
-    template_name = "xmarks/index.html"
+    template_name = "xmarks/home.html"
     login_url = reverse_lazy("login")
 
     def get_context_data(self, **kwargs):
@@ -55,7 +55,6 @@ class BookmarkCreateView(LoginRequiredMixin, CreateView):
         "favorite",
         "frequent",
         "tags",
-        "category",
     ]
     model = Bookmark
     login_url = reverse_lazy("login")
@@ -76,7 +75,6 @@ class BookmarkUpdateView(LoginRequiredMixin, UpdateView):
         "favorite",
         "frequent",
         "tags",
-        "category",
     ]
     model = Bookmark
     login_url = reverse_lazy("login")
@@ -95,7 +93,7 @@ class BookmarkListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Bookmark.objects.filter(user=self.request.user).order_by(
-            "category"
+            "tags"
         )
 
     def get_context_data(self, **kwargs):
