@@ -1,5 +1,5 @@
 {% load static %}
-{% load compress %}
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -7,16 +7,16 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        {% compress css %}
-        <!-- Bootstrap CSS -->
-{#            <link type="text/css" href="{% static 'frameworks/bootstrap/5.3.2/css/bootstrap.min.css' %}" rel="stylesheet">#}
-            <link type="text/x-scss" href="{% static 'xmarks/css/xmarks.scss' %}" rel="stylesheet" media="screen">
-        {% endcompress %}
-        {% block header_content %}
+        {% block head %}
+
         {% endblock %}
 
         <title>
-            {% block title %}{% endblock %}
+
+            {% block title %}
+
+            {% endblock %}
+
         </title>
 
     </head>
@@ -58,22 +58,28 @@
 
             </nav>
             </div>
+
             {% block header %}
+
             {% endblock %}
 
         </header>
         <main>
 
             {% block content %}
+
             {% endblock %}
+
         </main>
-        <!-- Bootstrap Bundle with Popper -->
-        <script src="{% static 'frameworks/bootstrap/5.3.2/js/bootstrap.bundle.min.js' %}"></script>
-        <script src="{% static 'libraries/fontawesome/6.4.2/js/brands.min.js' %}"></script>
-        <script src="{% static 'libraries/fontawesome/6.4.2/js/solid.min.js' %}"></script>
-        <script src="{% static 'libraries/fontawesome/6.4.2/js/fontawesome.min.js' %}"></script>
-        {% block js_imports %}
+
+        {% block js_frameworks %}
+
         {% endblock %}
+
+        {% block js_imports %}
+
+        {% endblock %}
+
         </div>
     </body>
 

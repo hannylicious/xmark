@@ -1,58 +1,22 @@
 {% extends 'base.html' %}
 
-{% block content %}
-      <div class="d-flex justify-content-center h-100">
-        <div class="searchbar w-100">
-          <input class="search_input" type="text" name="" placeholder="Search favorites...">
-          <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
-        </div>
-      </div>
-    {% if frequent_bookmarks.count > 0 %}
-        <h2>Frequents</h2>
-        <div id="frequentBookmarks" class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-2">
-            {% for bookmark in frequent_bookmarks %}
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <a href="{{ bookmark.url }}">
-                            <svg class="bd-placeholder-img card-img-top" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>
-                                {{ bookmark.name }}</title><rect width="100%" height="100%" fill="#55595c"></rect></svg>
-                        </a>
-                        <div class="card-body">
-                            <p class="card-text">{{ bookmark.name }}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a href="{{ bookmark.url }}" type="button" class="btn btn-sm btn-outline-primary">Visit</a>
-                                    <a href="{% url 'xmarks:bookmark-update' bookmark.pk %}" type="button" class="btn btn-sm btn-outline-primary">Edit</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-    {% if favorite_bookmarks.count > 0 %}
-        <h2>Favorites</h2>
-        <div id="favoriteBookmarks" class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-2">
-            {% for bookmark in favorite_bookmarks %}
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <a href="{{ bookmark.url }}">
-                            <svg class="bd-placeholder-img card-img-top" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>
-                        {{ bookmark.name }}</title><rect width="100%" height="100%" fill="#55595c"></rect></svg>
-                        </a>
-                        <div class="card-body">
-                            <p class="card-text">{{ bookmark.name }}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a href="{{ bookmark.url }}" type="button" class="btn btn-sm btn-outline-primary">Visit</a>
-                                    <a href="{% url 'xmarks:bookmark-update' bookmark.pk %}" type="button" class="btn btn-sm btn-outline-primary">Edit</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
+{% load static %}
+
+{% load compress %}
+
+{% block head %}
+
+    {% compress css %}
+        <link type="text/x-scss" href="{% static 'xmarks/css/xmarks.scss' %}" rel="stylesheet" media="screen">
+
+    {% endcompress %}
+
+{% endblock %}
+
+{% block js_frameworks %}
+    {% compress js file %}
+        <script src="{% static 'xmarks/vendor/htmx/htmx.min.js' %}"></script>
+
+    {% endcompress %}
+
 {% endblock %}
