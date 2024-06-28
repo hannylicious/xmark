@@ -1,0 +1,19 @@
+@import '_theme';
+
+// BOOTSTRAP
+
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "../vendor/bootstrap-5.3.2/scss/functions";
+
+// 2. Include any default variable overrides here
+$link-color: $xmarks-color-3-hex;
+
+
+// 3. Include the entire Bootstrap framework
+@import "../vendor/bootstrap-5.3.2/scss/bootstrap";
+
+// 4. Add additional custom code here
+
+.bg-primary-200 {
+  background-color: $blue-200;
+}
