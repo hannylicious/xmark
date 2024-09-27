@@ -88,7 +88,9 @@ WSGI_APPLICATION = "xmark.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {"default": env.db_url("DATABASE_URL")}
+DATABASES = {
+    "default": env.db_url("DATABASE_URL"),
+}
 
 
 # Password validation

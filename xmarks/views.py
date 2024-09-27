@@ -8,6 +8,7 @@ from django.views.generic import (
     UpdateView,
 )
 
+from xmarks.forms import BookmarkForm
 from xmarks.models import Bookmark, Tag
 
 
@@ -49,16 +50,17 @@ class BookmarkDetailView(LoginRequiredMixin, DetailView):
 
 
 class BookmarkCreateView(LoginRequiredMixin, CreateView):
-    fields = [
-        "name",
-        "url",
-        "favorite",
-        "frequent",
-        "tags",
-    ]
+    """View for creating Bookmarks."""
+
     model = Bookmark
     login_url = reverse_lazy("login")
     success_url = reverse_lazy("xmarks:bookmark-list")
+    form_class = BookmarkForm
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
     def form_valid(self, form):
         user = self.request.user
@@ -69,16 +71,12 @@ class BookmarkCreateView(LoginRequiredMixin, CreateView):
 
 
 class BookmarkUpdateView(LoginRequiredMixin, UpdateView):
-    fields = [
-        "name",
-        "url",
-        "favorite",
-        "frequent",
-        "tags",
-    ]
+    """View for updating Bookmarks."""
+
     model = Bookmark
     login_url = reverse_lazy("login")
     success_url = reverse_lazy("xmarks:bookmark-list")
+    form_class = BookmarkForm
 
     def form_valid(self, form):
         user = self.request.user
@@ -92,9 +90,7 @@ class BookmarkListView(LoginRequiredMixin, ListView):
     context_object_name = "bookmarks"
 
     def get_queryset(self):
-        return Bookmark.objects.filter(user=self.request.user).order_by(
-            "tags"
-        )
+        return Bookmark.objects.filter(user=self.request.user).order_by("tags")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
