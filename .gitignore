@@ -168,10 +168,19 @@ media/
 # Static
 /static/
 
+# Static Cache files
+CACHE/
+
 # Additional Apps
 
 # SQLite
 *.sqlite
+
+# Postgres
+postgres_data/
+
+# MSSQL
+mssql_data/
 
 # Nix Related
 shell.nix
