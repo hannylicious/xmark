@@ -9,8 +9,6 @@ from xmarks.models import Bookmark
 class BookmarkForm(ModelForm):
     """Form for creating and updating Bookmarks."""
 
-    tags_string = forms.CharField(widget=forms.TextInput(), required=False)
-
     class Meta:
         """Meta info for BookmarkForm."""
 
@@ -20,7 +18,6 @@ class BookmarkForm(ModelForm):
             "favorite",
             "frequent",
             "name",
-            "tags_string",
             "url",
             "updated_by",
             "user",
