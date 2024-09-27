@@ -1,23 +1,40 @@
-from django.core.exceptions import ValidationError
+"""Forms for the xmarks app."""
+
+from django import forms
 from django.forms import ModelForm
 
-from xmarks.models import Category
+from xmarks.models import Bookmark
 
 
-class CategoryForm(ModelForm):
+class BookmarkForm(ModelForm):
+    """Form for creating and updating Bookmarks."""
+
+    tags_string = forms.CharField(widget=forms.TextInput(), required=False)
+
     class Meta:
-        model = Category
-        fields = ["name", "root", "category"]
+        """Meta info for BookmarkForm."""
 
-    def clean(self):
-        cleaned_data = super().clean()
-        root = cleaned_data["root"]
-        category = cleaned_data["category"]
-        if not root and not category:
-            raise ValidationError(
-                "If making a non-root Category, a parent Category must be chosen."
-            )
-        if root and category:
-            raise ValidationError(
-                "If making a root Category, no parent Category can be chosen."
-            )
+        model = Bookmark
+        fields = [
+            "created_by",
+            "favorite",
+            "frequent",
+            "name",
+            "tags_string",
+            "url",
+            "updated_by",
+            "user",
+        ]
+        widgets = {
+            "created_by": forms.HiddenInput(),
+            "user": forms.HiddenInput(),
+            "updated_by": forms.HiddenInput(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super(BookmarkForm, self).__init__(*args, **kwargs)
+        if user is not None:
+            self.fields["user"].initial = user
+            self.initial["updated_by"] = user
+            self.initial["created_by"] = user
