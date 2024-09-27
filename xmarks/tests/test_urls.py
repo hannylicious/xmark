@@ -1,21 +1,23 @@
+"""Test URL patterns for xmarks app."""
+
 from django.test import SimpleTestCase
 from django.urls import resolve, reverse
 
 from xmarks.views import (
     BookmarkCreateView,
     BookmarkDetailView,
-    BookmarkUpdateView,
-    CategoryCreateView,
-    CategoryDetailView,
-    CategoryListView,
-    IndexTemplateView,
     BookmarkListView,
+    BookmarkUpdateView,
+    IndexTemplateView,
     TagDetailView,
 )
 
 
 class TestUrlsResolve(SimpleTestCase):
-    def test_index_url_resolves(self):
+    """Test URL patterns for xmarks app."""
+
+    def test_index_url_resolves(self) -> None:
+        """Test the index."""
         url = reverse("xmarks:index")
         self.assertEqual(resolve(url).func.view_class, IndexTemplateView)
 
@@ -39,14 +41,3 @@ class TestUrlsResolve(SimpleTestCase):
         url = reverse("xmarks:bookmark-list")
         self.assertEqual(resolve(url).func.view_class, BookmarkListView)
 
-    def test_category_create_url_resolves(self):
-        url = reverse("xmarks:category-create")
-        self.assertEqual(resolve(url).func.view_class, CategoryCreateView)
-
-    def test_category_detail_url_resolves(self):
-        url = reverse("xmarks:category-detail", args=[1])
-        self.assertEqual(resolve(url).func.view_class, CategoryDetailView)
-
-    def test_category_list_url_resolves(self):
-        url = reverse("xmarks:category-list")
-        self.assertEqual(resolve(url).func.view_class, CategoryListView)

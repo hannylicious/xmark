@@ -1,9 +1,11 @@
+"""Tests for the views of the xmarks app."""
+
 import pytest
 from django.test import TestCase, Client
 from django.urls import reverse
 
 from users.models import User
-from xmarks.models import Bookmark, Category, Tag
+from xmarks.models import Bookmark, Tag
 
 
 class ViewTestCase(TestCase):
@@ -244,118 +246,3 @@ class BookmarkListViewTests(ViewTestCase):
         self.assertEqual(list(context["bookmarks"]), self.bookmarks)
 
 
-class CategoryDetailViewTests(ViewTestCase):
-    def setUp(self):
-        super().setUp()
-        self.category = Category.objects.create(
-            name="Test Category",
-            user=self.user,
-            created_by=self.user,
-            updated_by=self.user,
-        )
-        self.bookmarks = [
-            Bookmark.objects.create(
-                name="Bookmark 1",
-                url="https://example.com",
-                category=self.category,
-                user=self.user,
-                created_by=self.user,
-                updated_by=self.user,
-            ),
-            Bookmark.objects.create(
-                name="Bookmark 2",
-                url="https://example.com",
-                category=self.category,
-                user=self.user,
-                created_by=self.user,
-                updated_by=self.user,
-            ),
-        ]
-
-    def test_login_required(self):
-        self.client.logout()
-        response = self.client.get(
-            reverse("xmarks:category-detail", kwargs={"pk": self.category.pk})
-        )
-        self.assertEqual(response.status_code, 302)
-
-    def test_authenticated_user_can_see_category_details(self):
-        response = self.client.get(
-            reverse("xmarks:category-detail", kwargs={"pk": self.category.pk})
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["category"], self.category)
-
-    def test_context_data_contains_category_bookmarks(self):
-        response = self.client.get(
-            reverse("xmarks:category-detail", kwargs={"pk": self.category.pk})
-        )
-        context = response.context
-        self.assertIn("category_bookmarks", context)
-        self.assertEqual(list(context["category_bookmarks"]), self.bookmarks)
-
-
-class CategoryCreateViewTests(ViewTestCase):
-    def test_login_required(self):
-        self.client.logout()
-        response = self.client.get(reverse("xmarks:category-create"))
-        self.assertEqual(response.status_code, 302)
-
-    def test_authenticated_user_can_create_category(self):
-        response = self.client.post(
-            reverse("xmarks:category-create"),
-            data={
-                "name": "Test Category",
-                "root": True,
-            },
-        )
-        self.assertEqual(response.status_code, 302)
-        category = Category.objects.get(name="Test Category")
-        self.assertEqual(category.user, self.user)
-        self.assertEqual(category.created_by, self.user)
-        self.assertEqual(category.updated_by, self.user)
-
-    def test_invalid_form_data_re_renders_form(self):
-        response = self.client.post(
-            reverse("xmarks:category-create"),
-            data={
-                "name": "",
-            },
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertIn("form", response.context)
-
-
-class CategoryListViewTests(ViewTestCase):
-    def setUp(self):
-        super().setUp()
-        self.categories = [
-            Category.objects.create(
-                name="Test Category 1",
-                user=self.user,
-                created_by=self.user,
-                updated_by=self.user,
-            ),
-            Category.objects.create(
-                name="Test Category 2",
-                user=self.user,
-                created_by=self.user,
-                updated_by=self.user,
-            ),
-        ]
-
-    def test_login_required(self):
-        self.client.logout()
-        response = self.client.get(reverse("xmarks:category-list"))
-        self.assertEqual(response.status_code, 302)
-
-    def test_authenticated_user_can_see_list_of_categories(self):
-        response = self.client.get(reverse("xmarks:category-list"))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.context["categories"]), 2)
-
-    def test_context_data_contains_categories(self):
-        response = self.client.get(reverse("xmarks:category-list"))
-        context = response.context
-        self.assertIn("categories", context)
-        self.assertEqual(list(context["categories"]), self.categories)

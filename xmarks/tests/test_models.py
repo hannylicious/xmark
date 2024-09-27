@@ -2,29 +2,11 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
-from xmarks.models import Bookmark, Category, Tag
-
-
-class CategoryModelTestCase(TestCase):
-    def setUp(self):
-        self.user = get_user_model().objects.create_user(
-            username="testuser", password="testpassword"
-        )
-
-    def test_category_creation(self):
-        category = Category.objects.create(
-            name="TestCategory",
-            user=self.user,
-            created_by=self.user,
-            updated_by=self.user,
-        )
-        self.assertIsInstance(category, Category)
-        self.assertEqual(category.name, "TestCategory")
-        self.assertEqual(str(category), "TestCategory")
+from xmarks.models import Bookmark, Tag
 
 
 class TagModelTestCase(TestCase):
-    def setUp(self):
+    def setUp(self):        # RUNS BEFORE EACH TEST
         self.user = get_user_model().objects.create_user(
             username="testuser", password="testpassword"
         )
