@@ -1,24 +1,15 @@
 {% extends 'xmarks/index.html' %}
 
 {% block content %}
-    <h1>Bookmarks <a class="btn btn-primary float-end" href="{% url 'xmarks:bookmark-create' %}"><i class="bi bi-bookmark-plus"></i> Add bookmark</a></h1>
+    <h2>Your Bookmarks <a class="btn btn-primary float-end" href="{% url 'xmarks:bookmark-create' %}"><i class="bi bi-bookmark-plus"></i> Add bookmark</a></h2>
     {% if bookmarks %}
-        {% regroup bookmarks by category as bookmark_list %}
-        <div class="bg-body">
-                <ul>
-        {% for category, bookmarks in bookmark_list %}
-            <li>{{ category }}
-            <ul>
+        <ul>
             {% for bookmark in bookmarks %}
                 <li class="border-bottom ">
-                    <a href="{{ bookmark.url }}">{{ bookmark.name }}</a><a href="{% url 'xmarks:bookmark-update' bookmark.pk %}"><i class="bi bi-pencil-square"></i></a>
+                    <a href="{{ bookmark.url }}">{{ bookmark.name }}</a><a href="{% url 'xmarks:bookmark-update' bookmark.pk %}" class="ms-2">(<i class="fa-solid fa-pen-to-square"></i> Edit)</a>
                 </li>
             {% endfor %}
-            </ul>
-            </li>
-        {% endfor %}
         </ul>
-        </div>
 
     {% else %}
         <p>No bookmarks yet.</p>

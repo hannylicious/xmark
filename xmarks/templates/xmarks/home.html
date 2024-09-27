@@ -1,15 +1,9 @@
 {% extends 'xmarks/index.html' %}
 
 {% block content %}
-      <div class="d-flex justify-content-center h-100">
-        <div class="searchbar w-100">
-          <input class="search_input" type="text" name="" placeholder="Search favorites...">
-          <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
-        </div>
-      </div>
-    {% if frequent_bookmarks.count > 0 %}
+    <section id="frequentBookmarksSection" class="mt-4">
         <h2>Frequents</h2>
-        <div id="frequentBookmarks" class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-2">
+        <div id="frequentBookmarks" class="row {% if frequent_bookmarks %}row-cols-1 row-cols-sm-2 row-cols-md-4{% endif %} g-2">
             {% for bookmark in frequent_bookmarks %}
                 <div class="col">
                     <div class="card shadow-sm">
@@ -28,12 +22,16 @@
                         </div>
                     </div>
                 </div>
+            {% empty %}
+                <div class="col text-center">
+                    <p>You have no frequently visited bookmarks, would you like to <a href="{% url 'xmarks:bookmark-create' %}">create one</a>?</p>
+                </div>
             {% endfor %}
         </div>
-    {% endif %}
-    {% if favorite_bookmarks.count > 0 %}
+    </section>
+    <section id="favoriteBookmarksSection" class="mt-4">
         <h2>Favorites</h2>
-        <div id="favoriteBookmarks" class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-2">
+        <div id="favoriteBookmarks" class="row {% if favorite_bookmarks %}row-cols-1 row-cols-sm-2 row-cols-md-4{% endif %} g-2">
             {% for bookmark in favorite_bookmarks %}
                 <div class="col">
                     <div class="card shadow-sm">
@@ -52,7 +50,11 @@
                         </div>
                     </div>
                 </div>
+            {% empty %}
+                <div class="col text-center">
+                    <p>You have no favorite bookmarks, would you like to <a href="{% url 'xmarks:bookmark-create' %}">create one</a>?</p>
+                </div>
             {% endfor %}
         </div>
-    {% endif %}
+    </section>
 {% endblock %}
