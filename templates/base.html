@@ -51,7 +51,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="me-3 py-2 text-dark text-decoration-none dropdown-item" href="{% url 'xmarks:bookmark-list' %}">All Bookmarks</a></li>
-                        <li><a class="me-3 py-2 text-dark text-decoration-none dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                        <li><form action="{% url 'logout' %}" method="post">{% csrf_token %}<button type="submit" class="me-3 py-2 text-dark text-decoration-none dropdown-item">Logout</button></form></li>
                     </ul>
                 </div>
             {% endif %}
