@@ -30,3 +30,16 @@ You can also run all the test by using `pytest` from the root of the repo
 * Developed by/with/for the Twitch community of [Hannylicious](https://twitch.tv/hannylicious)
 * The project is configured to use `django-environ` to load environment variables from `.env` file
 
+### TODO ###
+- Logout redirect to login page
+- Delete view for bookmarks
+- API for searching bookmarks (Django Ninja? Returns links in datalist)
+- User account creation
+- Add screenshots to the favorites/frequents on load
+- Search functionality for bookmarks
+- Tagging functionality for bookmarks
+- Django Ninja for API for search results?
+- Add a middleware for the menu items to be grabbed from JSON stored somewhere in the app and inject into context and rendered 
+- Add a favicon
+- Add a logo
+- Add a footer

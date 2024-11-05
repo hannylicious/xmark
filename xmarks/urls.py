@@ -24,6 +24,11 @@ urlpatterns = [
         name="bookmark-update",
     ),
     path(
+        "bookmarks/delete/<int:pk>/",
+        views.BookmarkDeleteView.as_view(),
+        name="bookmark-delete",
+    ),
+    path(
         "bookmarks/",
         views.BookmarkListView.as_view(),
         name="bookmark-list",
