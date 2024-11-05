@@ -3,7 +3,7 @@
 {% block content %}
     <h2>Your Bookmarks <a class="btn btn-primary float-end" href="{% url 'xmarks:bookmark-create' %}"><i class="fa-regular fa-plus"></i> Add bookmark</a></h2>
     {% if bookmarks %}
-        <ul>
+        <ul class="list-unstyled">
             {% for bookmark in bookmarks %}
                 <li class="border-bottom {% if forloop.first %}border-top{% endif %} row pt-2 pb-2">
                     <div class="col align-content-center">
@@ -12,13 +12,12 @@
                     <div class="col-auto pe-0">
                         <a href="{% url 'xmarks:bookmark-update' bookmark.pk %}" class="ms-2"><button class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i> Edit</button></a>
                     </div>
-                    <div class="col-auto ps-0">
+                    <div class="col-auto ps-0 pe-0">
                         <form method="post" action="{% url 'xmarks:bookmark-delete' bookmark.pk %}" class="ms-2">{% csrf_token %}<button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa-regular fa-trash-xmark"></i> Delete</button></form>
                     </div>
                 </li>
             {% endfor %}
         </ul>
-
     {% else %}
         <p>No bookmarks yet.</p>
         <p><a href="{% url 'xmarks:bookmark-create' %}">Create a bookmark?</a> </p>
