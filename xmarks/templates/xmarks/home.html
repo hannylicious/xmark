@@ -13,10 +13,10 @@
                         </a>
                         <div class="card-body">
                             <p class="card-text">{{ bookmark.name }}</p>
-                            <div class="d-flex justify-content-between align-items-center">
+                            <div class="row justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a href="{{ bookmark.url }}" type="button" class="btn btn-sm btn-outline-primary">Visit</a>
-                                    <a href="{% url 'xmarks:bookmark-update' bookmark.pk %}" type="button" class="btn btn-sm btn-outline-primary">Edit</a>
+                                    <a href="{{ bookmark.url }}" type="button" class="btn btn-sm btn-outline-primary"><i class="fa-regular fa-link"></i> Visit</a>
+                                    <a href="{% url 'xmarks:bookmark-update' bookmark.pk %}" type="button" class="btn btn-sm btn-outline-secondary"><i class="fa-regular fa-pen-to-square"></i> Edit</a>
                                 </div>
                             </div>
                         </div>
@@ -41,10 +41,10 @@
                         </a>
                         <div class="card-body">
                             <p class="card-text">{{ bookmark.name }}</p>
-                            <div class="d-flex justify-content-between align-items-center">
+                            <div class="row justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a href="{{ bookmark.url }}" type="button" class="btn btn-sm btn-outline-primary">Visit</a>
-                                    <a href="{% url 'xmarks:bookmark-update' bookmark.pk %}" type="button" class="btn btn-sm btn-outline-primary">Edit</a>
+                                    <a href="{{ bookmark.url }}" type="button" class="btn btn-sm btn-outline-primary"><i class="fa-regular fa-link"></i> Visit</a>
+                                    <a href="{% url 'xmarks:bookmark-update' bookmark.pk %}" type="button" class="btn btn-sm btn-outline-secondary"><i class="fa-regular fa-pen-to-square"></i> Edit</a>
                                 </div>
                             </div>
                         </div>
