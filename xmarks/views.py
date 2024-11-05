@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
-    DetailView,
+    DeleteView, DetailView,
     ListView,
     TemplateView,
     UpdateView,
@@ -68,6 +68,14 @@ class BookmarkCreateView(LoginRequiredMixin, CreateView):
         form.instance.created_by = user
         form.instance.updated_by = user
         return super().form_valid(form)
+
+
+class BookmarkDeleteView(LoginRequiredMixin, DeleteView):
+    """View for deleting Bookmarks."""
+
+    model = Bookmark
+    login_url = reverse_lazy("login")
+    success_url = reverse_lazy("xmarks:bookmark-list")
 
 
 class BookmarkUpdateView(LoginRequiredMixin, UpdateView):
