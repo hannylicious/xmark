@@ -7,7 +7,7 @@
             {% for bookmark in bookmarks %}
                 <li class="border-bottom {% if forloop.first %}border-top{% endif %} row pt-2 pb-2">
                     <div class="col align-content-center">
-                        <a href="{{ bookmark.url }}">{{ bookmark.name }}</a>
+                        <a href="{{ bookmark.url }}" target="_blank">{{ bookmark.name }} <i class="fa-light fa-square-up-right"></i></a>
                     </div>
                     <div class="col-auto pe-0">
                         <a href="{% url 'xmarks:bookmark-update' bookmark.pk %}" class="ms-2"><button class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i> Edit</button></a>
